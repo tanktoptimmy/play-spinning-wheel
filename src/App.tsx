@@ -2,6 +2,7 @@ import {  useEffect, useRef, useState, Fragment, useCallback } from 'react'
 import Arc from './components/Arc'
 import Ranger from './components/Ranger'
 import Lighting from './components/Lighting'
+import Initials from './components/Initials'
 
 export default function Home() {
   const colours = ["#F0E10C", "#9002A2", "#F9141F", "#58C4FF", "#1C9C35"]
@@ -114,6 +115,9 @@ export default function Home() {
                 return (<Fragment key={idx}>
                   <div className="abs">
                     <Arc x={200} y={200} radius={200} degrees={angle} rotate={idx*angle} colour={colours[colourSelection]} />
+                  </div>
+                  <div className="abs">
+                    <Initials degrees={angle} rotate={idx*angle} colour="white" text={player.short} />
                   </div>
                 </Fragment>)
               })}

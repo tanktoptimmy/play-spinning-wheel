@@ -98,3 +98,19 @@
   left: 194px;
   transform-origin: bottom center;
 }
+
+.initials {
+  position: absolute;
+  height: 170px;
+  top: 30px;
+  left: 150px;
+  transform-origin: bottom center;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  letter-spacing: 0em;
+  font-size: 2.5em;
+  font-weight: bold;
+  text-shadow: 5px 5px 5px #000;
+  width: 100px;
+  line-height: 100px
+}
