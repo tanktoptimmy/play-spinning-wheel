@@ -1,6 +1,7 @@
 import {  useEffect, useRef, useState, Fragment, useCallback } from 'react'
 import Arc from './components/Arc'
 import Ranger from './components/Ranger'
+import Lighting from './components/Lighting'
 
 export default function Home() {
   const colours = ["#F0E10C", "#9002A2", "#F9141F", "#58C4FF", "#1C9C35"]
@@ -86,13 +87,18 @@ export default function Home() {
       [property]: num
     })
   },[setCurrentPlayState, currentPlayState])
-  const angle = 359.9999/currentPlayState.numberOfPlayers
+
+  const { numberOfPlayers, numberOfBulbs } = currentPlayState;
+  const angle = 359.9999/numberOfPlayers
   return (
     <div className="container">
       <main className="main">
         <div className="wheelholder">
           <div className="wheelshadow"></div>
           <div className="wheelrim"></div>
+          <div className="wheelbulbs">
+            <Lighting numberOfBulbs={numberOfBulbs}/>
+          </div>
           <div className="wheel">
             <div 
               className="rotating"
@@ -103,7 +109,7 @@ export default function Home() {
                   transitionDuration: `${duration}s`
                 }
               }>
-                {players.slice(0,currentPlayState.numberOfPlayers).map((player, idx)=> {
+                {players.slice(0,numberOfPlayers).map((player, idx)=> {
                 const colourSelection = idx%colours.length;
                 return (<Fragment key={idx}>
                   <div className="abs">
@@ -118,11 +124,11 @@ export default function Home() {
         <div style={{display: "flex", justifyContent: "center", marginTop: "200px"}}>
           <div style={{ marginInline: "12px" }}>
             <div>Number of Players:</div>
-            <Ranger max={players.length} min={1} property="numberOfPlayers" changeProperty={changeProperty} num={currentPlayState.numberOfPlayers}/>
+            <Ranger max={players.length} min={1} property="numberOfPlayers" changeProperty={changeProperty} num={numberOfPlayers}/>
           </div>
           <div style={{ marginInline: "12px" }}>
             <div>Number of Bulbs:</div>
-            <Ranger max={1200} min={1} property="numberOfBulbs" changeProperty={changeProperty} num={currentPlayState.numberOfBulbs}/>
+            <Ranger max={1200} min={1} property="numberOfBulbs" changeProperty={changeProperty} num={numberOfBulbs}/>
           </div>
           <div>
             <button onClick={()=>play()}>PLAY</button>
