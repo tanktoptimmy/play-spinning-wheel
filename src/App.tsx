@@ -1,5 +1,6 @@
-import {  useEffect, useRef, useState, Fragment } from 'react'
+import {  useEffect, useRef, useState, Fragment, useCallback } from 'react'
 import Arc from './components/Arc'
+import Ranger from './components/Ranger'
 
 export default function Home() {
   const colours = ["#F0E10C", "#9002A2", "#F9141F", "#58C4FF", "#1C9C35"]
@@ -28,18 +29,18 @@ export default function Home() {
       name: "Bade",
       short: "BA"
     },
-    // {
-    //   name: "Timmy P",
-    //   short: "TP"
-    // },
-    // {
-    //   name: "Erwann Barker",
-    //   short: "EB"
-    // },
-    // {
-    //   name: "Tommy R",
-    //   short: "TR"
-    // }
+    {
+      name: "Timmy P",
+      short: "TP"
+    },
+    {
+      name: "Erwann Barker",
+      short: "EB"
+    },
+    {
+      name: "Tommy R",
+      short: "TR"
+    }
   ]
 
   const spinner = useRef<HTMLDivElement|null>(null)
@@ -61,19 +62,31 @@ export default function Home() {
   }, [spinner])
 
   const initialDegrees = 0;
-  const angle = 359.9999/players.length;
 
   const [degrees, setDegrees] = useState(initialDegrees);
   const [duration, setDuration] = useState(5);
+  const [selectedNumber, setSelectedNumber] = useState(0)
+  const [currentPlayState, setCurrentPlayState] = useState({
+    numberOfPlayers: 5,
+    numberOfBulbs: 29
+  })
   const play = () => {
     setDuration(5)
-    setDegrees(3600*5 + (angle * 3))
+    setDegrees(3600*5 + (angle * selectedNumber) - (angle/2))
   };
   const reset = () => {
     setDuration(0)
     setDegrees(initialDegrees)
   };
 
+
+  const changeProperty = useCallback((property: string, num: number) => {
+    setCurrentPlayState({
+      ...currentPlayState,
+      [property]: num
+    })
+  },[setCurrentPlayState, currentPlayState])
+  const angle = 359.9999/currentPlayState.numberOfPlayers
   return (
     <div className="container">
       <main className="main">
@@ -90,7 +103,7 @@ export default function Home() {
                   transitionDuration: `${duration}s`
                 }
               }>
-                {players.map((player, idx)=> {
+                {players.slice(0,currentPlayState.numberOfPlayers).map((player, idx)=> {
                 const colourSelection = idx%colours.length;
                 return (<Fragment key={idx}>
                   <div className="abs">
@@ -103,8 +116,18 @@ export default function Home() {
           </div>
 
         <div style={{display: "flex", justifyContent: "center", marginTop: "200px"}}>
-          <button onClick={()=>play()}>PLAY</button>
-          <button onClick={()=>reset()}>RESET</button>
+          <div style={{ marginInline: "12px" }}>
+            <div>Number of Players:</div>
+            <Ranger max={players.length} min={1} property="numberOfPlayers" changeProperty={changeProperty} num={currentPlayState.numberOfPlayers}/>
+          </div>
+          <div style={{ marginInline: "12px" }}>
+            <div>Number of Bulbs:</div>
+            <Ranger max={1200} min={1} property="numberOfBulbs" changeProperty={changeProperty} num={currentPlayState.numberOfBulbs}/>
+          </div>
+          <div>
+            <button onClick={()=>play()}>PLAY</button>
+            <button onClick={()=>reset()}>RESET</button>
+          </div>
         </div>
       </main>
     </div>
