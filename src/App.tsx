@@ -3,10 +3,83 @@ import Arc from './components/Arc'
 import Ranger from './components/Ranger'
 import Lighting from './components/Lighting'
 import Initials from './components/Initials'
+import Star from './components/Star'
 
 export default function Home() {
   const colours = ["#F0E10C", "#9002A2", "#F9141F", "#58C4FF", "#1C9C35"]
   const players=[
+    {
+      name: "Alex J",
+      short: "AJ"
+    },
+    {
+      name: "Heera R",
+      short: "HR"
+    },
+    {
+      name: "Tee G",
+      short: "TG"
+    },
+    {
+      name: "Izzy H",
+      short: "IH"
+    },
+    {
+      name: "Ryan K",
+      short: "RK"
+    },
+    {
+      name: "Bade",
+      short: "BA"
+    },
+    {
+      name: "Timmy P",
+      short: "TP"
+    },
+    {
+      name: "Erwann Barker",
+      short: "EB"
+    },
+    {
+      name: "Tommy R",
+      short: "TR"
+    },
+    {
+      name: "Alex J",
+      short: "AJ"
+    },
+    {
+      name: "Heera R",
+      short: "HR"
+    },
+    {
+      name: "Tee G",
+      short: "TG"
+    },
+    {
+      name: "Izzy H",
+      short: "IH"
+    },
+    {
+      name: "Ryan K",
+      short: "RK"
+    },
+    {
+      name: "Bade",
+      short: "BA"
+    },
+    {
+      name: "Timmy P",
+      short: "TP"
+    },
+    {
+      name: "Erwann Barker",
+      short: "EB"
+    },
+    {
+      name: "Tommy R",
+      short: "TR"
+    },
     {
       name: "Alex J",
       short: "AJ"
@@ -126,6 +199,29 @@ export default function Home() {
               })}
             </div>
           </div>
+
+
+          <div style={{
+              position: "absolute",
+              height: "80px",
+              width: "80px",
+              backgroundColor: "black",
+              top: "160px",
+              borderRadius: "100px",
+              // boxShadow:"0px 0px 40px black",
+              zIndex: 500,
+              transform: `rotate(${degrees}deg)`,
+              transitionDuration: `${duration+1}s`
+            }}>
+              <div className="abs" style={{top: "12px", left: "12px", height: "50px", width: "50px"}}>
+                <Star colour="red"/>
+              </div>
+              <div className="abs" style={{top: "15px", left: "15px", height: "50px", width: "50px"}}>
+                <Star colour="#FFEE00"/>
+              </div>
+            </div>
+
+
         </div>
 
         <section style={{display: "flex",  marginTop: "100px",}}>

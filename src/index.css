@@ -63,8 +63,7 @@
   animation-iteration-count: 1;
   transform-origin: 200px 200px;
   transition: all;
-  /* transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1) */
-  transition-timing-function: cubic-bezier(0.42, .67, .85, 1)
+  transition-timing-function:cubic-bezier(.04,1.04,.58,1)
 }
 
 .abs {
