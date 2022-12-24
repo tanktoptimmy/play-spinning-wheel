@@ -4,6 +4,7 @@ import Ranger from './components/Ranger'
 import Lighting from './components/Lighting'
 import Initials from './components/Initials'
 import Star from './components/Star'
+import ArrowDown from './components/ArrowDown'
 
 export default function Home() {
   const colours = ["#F0E10C", "#9002A2", "#F9141F", "#58C4FF", "#1C9C35"]
@@ -175,6 +176,9 @@ export default function Home() {
           <div className="wheelrim"></div>
           <div className="wheelbulbs">
             <Lighting numberOfBulbs={numberOfBulbs}/>
+          </div>
+          <div className="arrowDown abs" style={{zIndex: "400", top: -20}}>
+            <ArrowDown/>
           </div>
           <div className="wheel">
             <div
