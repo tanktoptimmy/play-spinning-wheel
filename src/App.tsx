@@ -1,4 +1,4 @@
-import {  useEffect, useRef, useState, Fragment, useCallback } from 'react'
+import {  useEffect, useRef, useState, Fragment, useCallback, FormEvent } from 'react'
 import Arc from './components/Arc'
 import Ranger from './components/Ranger'
 import Lighting from './components/Lighting'
@@ -64,23 +64,27 @@ export default function Home() {
   }, [spinner])
 
   const initialDegrees = 0;
+  const SPIN_DURATION = 7.5
 
   const [degrees, setDegrees] = useState(initialDegrees);
-  const [duration, setDuration] = useState(5);
-  const [selectedNumber, setSelectedNumber] = useState(0)
+  const [duration, setDuration] = useState(SPIN_DURATION);
   const [currentPlayState, setCurrentPlayState] = useState({
     numberOfPlayers: 5,
-    numberOfBulbs: 29
+    numberOfBulbs: 29,
+    selectedWinner: 0,
+    spinDuration: 5
   })
+
+  const { numberOfPlayers, numberOfBulbs, selectedWinner, spinDuration } = currentPlayState;
+
   const play = () => {
-    setDuration(5)
-    setDegrees(3600*5 + (angle * selectedNumber) - (angle/2))
+    setDuration(spinDuration)
+    setDegrees(3600*5 - (angle * selectedWinner) - (angle/2))
   };
   const reset = () => {
     setDuration(0)
     setDegrees(initialDegrees)
   };
-
 
   const changeProperty = useCallback((property: string, num: number) => {
     setCurrentPlayState({
@@ -89,7 +93,6 @@ export default function Home() {
     })
   },[setCurrentPlayState, currentPlayState])
 
-  const { numberOfPlayers, numberOfBulbs } = currentPlayState;
   const angle = 359.9999/numberOfPlayers
   return (
     <div className="container">
@@ -101,7 +104,7 @@ export default function Home() {
             <Lighting numberOfBulbs={numberOfBulbs}/>
           </div>
           <div className="wheel">
-            <div 
+            <div
               className="rotating"
               ref={spinner}
               style={
@@ -122,23 +125,54 @@ export default function Home() {
                 </Fragment>)
               })}
             </div>
+          </div>
+        </div>
+
+        <section style={{display: "flex",  marginTop: "100px",}}>
+          <div style={{display: "flex", flex: "0 0 50%", justifyContent: "center", flexDirection: "column", background: "rgba(0,0,0,0.5)", padding: "12px"}}>
+            <div style={{ margin: "12px", display: "flex"}}>
+              <div style={{flex: "50%"}}>
+                <div>Number of Players:</div>
+                <Ranger max={players.length} min={1} property="numberOfPlayers" changeProperty={changeProperty} num={numberOfPlayers}/>
+              </div>
+              <div style={{flex: "50%", justifyContent: "center", textAlign: "center"}}>
+                <div className="numberHolder">{numberOfPlayers}</div>
+              </div>
+            </div>
+            <div style={{ margin: "12px", display: "flex"}}>
+            <div style={{flex: "50%"}}>
+                <div>Number of Bulbs:</div>
+                <Ranger max={1200} min={1} property="numberOfBulbs" changeProperty={changeProperty} num={numberOfBulbs}/>
+              </div>
+              <div style={{flex: "50%", justifyContent: "center", textAlign: "center"}}>
+                <div className="numberHolder">{numberOfBulbs}</div>
+              </div>
+            </div>
+            <div style={{ margin: "12px", display: "flex" }}>
+            <div style={{flex: "50%"}}>
+                <div>Spin Duration:</div>
+                <Ranger max={20} min={1} property="spinDuration" changeProperty={changeProperty} num={spinDuration}/>
+              </div>
+              <div style={{flex: "50%", justifyContent: "center", textAlign: "center"}}>
+                <span className="numberHolder">{spinDuration}</span>
+              </div>
             </div>
           </div>
 
-        <div style={{display: "flex", justifyContent: "center", marginTop: "200px"}}>
-          <div style={{ marginInline: "12px" }}>
-            <div>Number of Players:</div>
-            <Ranger max={players.length} min={1} property="numberOfPlayers" changeProperty={changeProperty} num={numberOfPlayers}/>
-          </div>
-          <div style={{ marginInline: "12px" }}>
-            <div>Number of Bulbs:</div>
-            <Ranger max={1200} min={1} property="numberOfBulbs" changeProperty={changeProperty} num={numberOfBulbs}/>
+        <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", flex: "50%",  background: "rgba(0,0,0,0.25)", borderLeft: "1px solid rgba(255,255,255,0.5" }}>
+          <div style={{margin: "12px"}}>
+            <select value={selectedWinner} onChange={(e: FormEvent<HTMLSelectElement>) => changeProperty('selectedWinner', parseInt(e.currentTarget.value))}>
+              {players.slice(0,numberOfPlayers).map((player, idx) =>
+                  <option key={`${player.short}-${idx}`} value={idx}>{player.name}</option>
+              )}
+            </select>
           </div>
           <div>
-            <button onClick={()=>play()}>PLAY</button>
-            <button onClick={()=>reset()}>RESET</button>
+            <button style={{margin: "12px"}} onClick={()=>play()}>PLAY</button>
+            <button style={{margin: "12px"}} onClick={()=>reset()}>RESET</button>
           </div>
         </div>
+        </section>
       </main>
     </div>
   )
