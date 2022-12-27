@@ -144,7 +144,7 @@ export default function Home() {
   const [duration, setDuration] = useState(SPIN_DURATION);
   const [currentPlayState, setCurrentPlayState] = useState({
     numberOfPlayers: 5,
-    numberOfBulbs: 29,
+    numberOfBulbs: 87,
     selectedWinner: 0,
     spinDuration: 5
   })
@@ -212,7 +212,7 @@ export default function Home() {
               backgroundColor: "black",
               top: "160px",
               borderRadius: "100px",
-              // boxShadow:"0px 0px 40px black",
+              boxShadow:"0px 0px 20px black",
               zIndex: 500,
               transform: `rotate(${degrees}deg)`,
               transitionDuration: `${duration+1}s`
