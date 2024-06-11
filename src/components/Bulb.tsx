@@ -1,13 +1,14 @@
 import { CSSProperties } from 'react';
 
-const Bulb = ({style}:Props) => {
+const Bulb = ({style, name=""}:Props) => {
   const attribs ={
     style
   }
-  return <div className="bulb" {...attribs} />
+  return <div className={`bulb bulb${name}`} {...attribs} />
 };
 
 type Props = {
-  style?: CSSProperties | undefined
+  style?: CSSProperties | undefined;
+  name: string;
 }
 export default Bulb;

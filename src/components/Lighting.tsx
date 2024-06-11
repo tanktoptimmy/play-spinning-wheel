@@ -7,7 +7,7 @@ const Lighting = ({numberOfBulbs}:Props) => {
       key={i} 
       style={{transform: `rotate(${i*12.5}deg)`}}
       className="bulbholder">
-      <Bulb style={{animationDelay: `${i*0.1}s`}}/>
+      <Bulb name={i%2 === 1 ? "" : ""} style={{animationDelay: `${i*0.1}s`}} />
     </div>)
     }
   </div>
