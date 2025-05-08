@@ -153,7 +153,8 @@ export default function Home() {
 
   const play = () => {
     setDuration(spinDuration)
-    setDegrees(3600*5 - (angle * selectedWinner) - (angle/2))
+    setDegrees(3600*5 - (angle * selectedWinner) - (angle/2));
+    window.parent.postMessage({ type: 'SPIN_STARTED', winner: players[selectedWinner].name }, '*');
   };
   const reset = () => {
     setDuration(0)
