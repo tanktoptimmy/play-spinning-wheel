@@ -155,6 +155,7 @@ export default function Home() {
     setDuration(spinDuration)
     setDegrees(3600*5 - (angle * selectedWinner) - (angle/2));
     window.parent.postMessage('Simple test message from web!', '*');
+    window.postMessage('Simple test message from web - window only!', '*');
   };
   const reset = () => {
     setDuration(0)
